@@ -28,4 +28,5 @@ def openSmileExtractor(input_file_path):
 
 
 if __name__ == "__main__":
-    openSmileExtractor("test/302_AUDIO_2.wav")
+    result = openSmileExtractor("test/302_AUDIO_2.wav")
+    print(result["metadata"].keys())

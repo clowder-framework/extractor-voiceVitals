@@ -1,5 +1,7 @@
 ARG PYCLOWDER_PYTHON=""
 FROM clowder/extractors-simple-extractor${PYCLOWDER_PYTHON}:onbuild
 
-ENV EXTRACTION_FUNC="wordcount"
-ENV EXTRACTION_MODULE="wordcount"
+RUN pip install opensmile
+
+ENV EXTRACTION_FUNC="openSmileExtractor"
+ENV EXTRACTION_MODULE="openSmileExtractor"
