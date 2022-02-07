@@ -3,13 +3,13 @@
 """Example extractor based on the clowder code."""
 
 import logging
+import subprocess
 
 from pyclowder.extractors import Extractor
 import pyclowder.files
-import opensmile
 
 
-class OpenSmileExtractor(Extractor):
+class WordCount(Extractor):
     """Count the number of characters, words and lines in a text file."""
     def __init__(self):
         Extractor.__init__(self)
@@ -36,18 +36,18 @@ class OpenSmileExtractor(Extractor):
         connector.message_process(resource, "Loading contents of file...")
 
         # Call actual program
-        # Execute word count command on the input file and obtain the output
-        smile = opensmile.Smile(
-            feature_set=opensmile.FeatureSet.ComParE_2016,
-            feature_level=opensmile.FeatureLevel.Functionals,
-        )
+        result = subprocess.check_output(['wc', inputfile], stderr=subprocess.STDOUT)
+        result = result.decode('utf-8')
+        (lines, words, characters, _) = result.split()
 
-        # Create metadata dictionary
-        result = smile.process_file(inputfile).to_dict()
-
-        # connector.message_process(resource, "Found %s lines and %s words..." % (lines, words))
+        connector.message_process(resource, "Found %s lines and %s words..." % (lines, words))
 
         # Store results as metadata
+        result = {
+            'lines': lines,
+            'words': words,
+            'characters': characters
+        }
         metadata = self.get_metadata(result, 'file', file_id, host)
 
         # Normal logs will appear in the extractor log, but NOT in the Clowder UI.
@@ -57,5 +57,5 @@ class OpenSmileExtractor(Extractor):
         pyclowder.files.upload_metadata(connector, host, secret_key, file_id, metadata)
 
 if __name__ == "__main__":
-    extractor = OpenSmileExtractor()
+    extractor = WordCount()
     extractor.start()

@@ -1,7 +1,18 @@
-ARG PYCLOWDER_PYTHON=""
-FROM clowder/extractors-simple-extractor${PYCLOWDER_PYTHON}:onbuild
+# Base image
+FROM python:3
 
-RUN pip install opensmile
+# Creating workdir
+WORKDIR /home/clowder
 
-ENV EXTRACTION_FUNC="openSmileExtractor"
-ENV EXTRACTION_MODULE="openSmileExtractor"
+# Install pyClowder and any other python dependencies
+COPY requirements.txt .
+RUN pip3 install -r requirements.txt
+
+# Adding necessary code to container under workdir
+COPY openSmileExtractor.py extractor_info.json /home/clowder/
+
+# Command to be run when container is run
+CMD python3 <MY.CODE>.py
+
+ENV MAIN_SCRIPT="openSmileExtractor.py"
+
