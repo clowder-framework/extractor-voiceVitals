@@ -7,8 +7,7 @@
   "contributors": [],
   "contexts": [
     {
-      "audspec_lengthL1norm_sma_range": "http://clowder.ncsa.illinois.edu/metadata/ncsa.openSmileExtractor#audspec_lengthL1norm_sma_range",
-      "audspec_lengthL1norm_sma_maxPos": "http://clowder.ncsa.illinois.edu/metadata/ncsa.openSmileExtractor#audspec_lengthL1norm_sma_maxPos"
+      
     }
   ],
   "repository": [

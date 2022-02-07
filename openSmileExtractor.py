@@ -43,8 +43,13 @@ class OpenSmileExtractor(Extractor):
         )
 
         # Create metadata dictionary
-        result = smile.process_file(inputfile).to_dict('records')[0]
-
+        y = smile.process_file(inputfile)
+        m = y.to_dict('records')[0]
+        result = {
+            'audspec_lengthL1norm_sma_range': m['audspec_lengthL1norm_sma_range'],
+            'audspec_lengthL1norm_sma_maxPos': m['audspec_lengthL1norm_sma_maxPos'],
+            'audspec_lengthL1norm_sma_minPos': m['audspec_lengthL1norm_sma_minPos']
+        }
         # connector.message_process(resource, "Found %s lines and %s words..." % (lines, words))
 
         # Store results as metadata
