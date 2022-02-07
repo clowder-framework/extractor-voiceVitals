@@ -4,6 +4,8 @@ FROM python:3
 # Creating workdir
 WORKDIR /home/clowder
 
+RUN apt-get -qq -y update && apt-get install -qq -y libsndfile-dev
+
 # Install pyClowder and any other python dependencies
 COPY requirements.txt .
 RUN pip3 install -r requirements.txt

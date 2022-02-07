@@ -43,7 +43,7 @@ class OpenSmileExtractor(Extractor):
         )
 
         # Create metadata dictionary
-        result = smile.process_file(inputfile).to_dict()
+        result = smile.process_file(inputfile).to_dict('records')[0]
 
         # connector.message_process(resource, "Found %s lines and %s words..." % (lines, words))
 

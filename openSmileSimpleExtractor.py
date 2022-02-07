@@ -1,5 +1,5 @@
 import opensmile
-
+import json
 
 def openSmileExtractor(input_file_path):
     """
@@ -16,9 +16,8 @@ def openSmileExtractor(input_file_path):
     )
 
     # Create metadata dictionary
-    metadata = smile.process_file(input_file_path).to_dict()
-
-    # Store metadata in result dictionary
+    y = smile.process_file(input_file_path)
+    metadata = y.to_dict('records')[0]
     result = {
         'metadata': metadata
     }

@@ -2,13 +2,13 @@
   "@context": "http://clowder.ncsa.illinois.edu/contexts/extractors.jsonld",
   "name": "ncsa.openSmileExtractor",
   "version": "1.0",
-  "description": "WordCount simple extractor. Counts the number of characters, words and lines in the text file that was uploaded.",
-  "author": "Bing Zhang <bing@illinois.edu>",
+  "description": "Description on this extractor",
+  "author": "Pietrowicz, Mary B <marybp@illinois.edu>",
   "contributors": [],
   "contexts": [
     {
       "audspec_lengthL1norm_sma_range": "http://clowder.ncsa.illinois.edu/metadata/ncsa.openSmileExtractor#audspec_lengthL1norm_sma_range",
-      "audspec_lengthL1norm_sma_maxPos": "http://clowder.ncsa.illinois.edu/metadata/ncsa.openSmileExtractor#audspec_lengthL1norm_sma_maxPos",
+      "audspec_lengthL1norm_sma_maxPos": "http://clowder.ncsa.illinois.edu/metadata/ncsa.openSmileExtractor#audspec_lengthL1norm_sma_maxPos"
     }
   ],
   "repository": [
