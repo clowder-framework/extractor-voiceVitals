@@ -12,7 +12,7 @@ RUN pip3 install -r requirements.txt
 COPY openSmileExtractor.py extractor_info.json /home/clowder/
 
 # Command to be run when container is run
-CMD python3 <MY.CODE>.py
+CMD python3 openSmileExtractor.py
 
 ENV MAIN_SCRIPT="openSmileExtractor.py"
 

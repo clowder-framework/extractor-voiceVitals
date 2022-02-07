@@ -19,8 +19,7 @@
   ],
   "process": {
     "file": [
-      "text/*",
-      "application/json"
+      "audio/*"
     ]
   },
   "external_services": [],
