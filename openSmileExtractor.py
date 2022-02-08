@@ -27,6 +27,8 @@ class OpenSmileExtractor(Extractor):
 
     def process_message(self, connector, host, secret_key, resource, parameters):
         # Process the file and upload the results
+        # uncomment to see the resource
+        # print(resource)
 
         logger = logging.getLogger(__name__)
         inputfile = resource["local_paths"][0]
@@ -63,7 +65,8 @@ class OpenSmileExtractor(Extractor):
         pyclowder.files.upload_metadata(connector, host, secret_key, file_id, metadata)
 
         # 2. store table as new file and upload
-        filename = os.path.splitext(inputfile)[0] + "_summary.csv"
+        original_filename = resource["name"]
+        filename = os.path.splitext(original_filename)[0] + "_summary.csv"
         y.to_csv(filename, index=False)
         dataset_id = resource['parent'].get('id')
         pyclowder.files.upload_to_dataset(connector, host, secret_key, dataset_id, filename)
