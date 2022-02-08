@@ -1,10 +1,12 @@
-# Base image
+# Base image is an Ubuntu based
 FROM python:3
 
 # Creating workdir
 WORKDIR /home/clowder
 
 RUN apt-get -qq -y update && apt-get install -qq -y libsndfile-dev sox
+
+# RUN shell command
 
 # Install pyClowder and any other python dependencies
 COPY requirements.txt .
