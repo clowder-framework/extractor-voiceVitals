@@ -7,13 +7,13 @@
   "contributors": [],
   "contexts": [
     {
-      
+
     }
   ],
   "repository": [
     {
       "repType": "git",
-      "repUrl": "https://opensource.ncsa.illinois.edu/stash/scm/cats/pyclowder.git"
+      "repUrl": "https://github.com/longshuicy/voiceVitalsClowderExtractors.git"
     }
   ],
   "process": {
