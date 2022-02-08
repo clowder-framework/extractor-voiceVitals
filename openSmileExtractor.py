@@ -3,7 +3,7 @@
 """Example extractor based on the clowder code."""
 
 import logging
-
+import os
 from pyclowder.extractors import Extractor
 import pyclowder.files
 import opensmile
@@ -42,7 +42,7 @@ class OpenSmileExtractor(Extractor):
             feature_level=opensmile.FeatureLevel.Functionals,
         )
 
-        # Create metadata dictionary
+        # 1. Create metadata dictionary
         y = smile.process_file(inputfile)
 
         m = y.to_dict('records')[0]
@@ -62,11 +62,14 @@ class OpenSmileExtractor(Extractor):
         # Upload metadata to original file
         pyclowder.files.upload_metadata(connector, host, secret_key, file_id, metadata)
 
-        # store table as new file and upload
-        filename = "test.csv"
+        # 2. store table as new file and upload
+        filename = os.path.splitext(inputfile)[0] + "_summary.csv"
         y.to_csv(filename, index=False)
         dataset_id = resource['parent'].get('id')
         pyclowder.files.upload_to_dataset(connector, host, secret_key, dataset_id, filename)
+
+        # 3. store as preview
+        pyclowder.files.upload_preview(connector, host, secret_key, file_id, filename)
 
 if __name__ == "__main__":
     extractor = OpenSmileExtractor()
