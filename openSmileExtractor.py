@@ -62,7 +62,7 @@ class OpenSmileExtractor(Extractor):
         # Upload metadata to original file
         pyclowder.files.upload_metadata(connector, host, secret_key, file_id, metadata)
 
-        # store table as preview
+        # store table as new file and upload
         filename = "test.csv"
         y.to_csv(filename, index=False)
         dataset_id = resource['parent'].get('id')
