@@ -17,6 +17,9 @@ def openSmileExtractor(input_file_path):
 
     # Create metadata dictionary
     y = smile.process_file(input_file_path)
+    filename = "test.csv"
+    y.to_csv(filename, index=False)
+
     metadata = y.to_dict('records')[0]
     result = {
         'metadata': metadata

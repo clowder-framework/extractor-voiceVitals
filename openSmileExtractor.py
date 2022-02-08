@@ -44,6 +44,7 @@ class OpenSmileExtractor(Extractor):
 
         # Create metadata dictionary
         y = smile.process_file(inputfile)
+
         m = y.to_dict('records')[0]
         result = {
             'audspec_lengthL1norm_sma_range': m['audspec_lengthL1norm_sma_range'],
@@ -60,6 +61,12 @@ class OpenSmileExtractor(Extractor):
 
         # Upload metadata to original file
         pyclowder.files.upload_metadata(connector, host, secret_key, file_id, metadata)
+
+        # store table as preview
+        filename = "test.csv"
+        y.to_csv(filename, index=False)
+        dataset_id = resource['parent'].get('id')
+        pyclowder.files.upload_to_dataset(connector, host, secret_key, dataset_id, filename)
 
 if __name__ == "__main__":
     extractor = OpenSmileExtractor()
