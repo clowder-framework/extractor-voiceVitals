@@ -15,7 +15,7 @@ RUN pip3 install -r requirements.txt
 COPY openSmileExtractor.py extractor_info.json /home/clowder/
 
 # Command to be run when container is run
-CMD python3 openSmileExtractor.py
+CMD python3 openSmileExtractor.py --heartbeat 20
 
 ENV MAIN_SCRIPT="openSmileExtractor.py"
 
