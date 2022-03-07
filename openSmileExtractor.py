@@ -6,6 +6,7 @@ import logging
 import os
 from pyclowder.extractors import Extractor
 import pyclowder.files
+import pyclowder.datasets
 import opensmile
 
 
@@ -73,6 +74,16 @@ class OpenSmileExtractor(Extractor):
 
         # 3. store as preview
         pyclowder.files.upload_preview(connector, host, secret_key, file_id, filename)
+
+        # 4. look around other files in the same dataset
+        files_in_dataset = pyclowder.datasets.get_file_list(connector, host, secret_key, secret_key)
+        for file in files_in_dataset:
+            file_id = file["id"]
+            metadata = pyclowder.files.download_metadata(connector, host, secret_key, file_id, extractor=None)
+            # your own logic to parse the metdata and generate visualization
+
+            print(metadata)
+
 
 if __name__ == "__main__":
     extractor = OpenSmileExtractor()
