@@ -46,7 +46,7 @@ class OpenSmileExtractor(Extractor):
         #     feature_set=opensmile.FeatureSet.ComParE_2016,
         #     feature_level=opensmile.FeatureLevel.Functionals,
         # )
-        # 
+
         # ##############################################
         # # 1. Create metadata dictionary
         # y = smile.process_file(inputfile)
@@ -67,7 +67,7 @@ class OpenSmileExtractor(Extractor):
         # 
         # # Upload metadata to original file
         # pyclowder.files.upload_metadata(connector, host, secret_key, file_id, metadata)
-        # 
+
         # ##############################################
         # # 2. store table as new file and upload
         # original_filename = resource["name"]
@@ -75,11 +75,11 @@ class OpenSmileExtractor(Extractor):
         # y.to_csv(filename, index=False)
         # dataset_id = resource['parent'].get('id')
         # pyclowder.files.upload_to_dataset(connector, host, secret_key, dataset_id, filename)
-        # 
+
         # ##############################################
         # # 3. store as preview
         # pyclowder.files.upload_preview(connector, host, secret_key, file_id, filename)
-        # 
+
         ##############################################
         # 4. look around other files in the same dataset
         files_in_dataset = pyclowder.datasets.get_file_list(connector, host, secret_key, dataset_id)
@@ -98,137 +98,24 @@ class OpenSmileExtractor(Extractor):
         # # pyclowder.files.upload_to_dataset(connector, host, secret_key, dataset_id, preview_fname)
 
         ##############################################
-        # 7. overwrite the same file
-        overwrite_fname = "file_to_overwrite.txt"
-        # create a dummy overwrite file
-        with open(overwrite_fname, 'w') as f:
-            curDT = datetime.now()
-            f.write(curDT.strftime("%H:%M:%S"))
-        for file in files_in_dataset:
-            if file["filename"] == overwrite_fname:
-                # delete old one
-                url = '%sapi/files/%s?key=%s' % (host, file["id"], secret_key)
-                result = connector.delete(url, verify=connector.ssl_verify if connector else True)
-        # post new one
-        pyclowder.files.upload_to_dataset(connector, host, secret_key, dataset_id, overwrite_fname)
+        # # 7. overwrite the same file
+        # overwrite_fname = "file_to_overwrite.txt"
+        # # create a dummy overwrite file
+        # with open(overwrite_fname, 'w') as f:
+        #     curDT = datetime.now()
+        #     f.write(curDT.strftime("%H:%M:%S"))
+        # for file in files_in_dataset:
+        #     if file["filename"] == overwrite_fname:
+        #         # delete old one
+        #         url = '%sapi/files/%s?key=%s' % (host, file["id"], secret_key)
+        #         result = connector.delete(url, verify=connector.ssl_verify if connector else True)
+        # # post new one
+        # pyclowder.files.upload_to_dataset(connector, host, secret_key, dataset_id, overwrite_fname)
+
+        ##############################################
+        # 8. list files in a folder
 
 
 if __name__ == "__main__":
     extractor = OpenSmileExtractor()
     extractor.start()
-
-    # uncomment to test
-# if __name__ == "__main__":
-    # metadata_list= [
-    #     [{'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #     'id': '62265872e4b09fbb1ccb7244',
-    #   'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/62265870e4b09fbb1ccb723b'},
-    #   'created_at': 'Mon Mar 07 19:09:38 GMT 2022',
-    #   'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #             'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/2.0'},
-    #   'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #               'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #               'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}}],
-    #     [],
-    #     [{'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656c1e4b09fbb18939969',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:25 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}},
-    #      {'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656c0e4b09fbb18939957',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:24 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}},
-    #      {'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656bfe4b09fbb18939945',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:23 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}},
-    #      {'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656bee4b09fbb18939933',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:22 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}},
-    #      {'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656bde4b09fbb18939921',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:21 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}},
-    #      {'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656bce4b09fbb1893990f',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:20 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}},
-    #      {'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656bbe4b09fbb189398fd',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:19 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}},
-    #      {'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656bae4b09fbb189398ea',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:18 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}},
-    #      {'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656b9e4b09fbb189398d8',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:17 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}},
-    #      {'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656b8e4b09fbb189398c7',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:16 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}},
-    #      {'@context': ['https://clowder.ncsa.illinois.edu/contexts/metadata.jsonld', {}],
-    #       'id': '622656b6e4b09fbb189398b4',
-    #       'attached_to': {'resource_type': 'cat:file', 'url': 'http://clowder:9000/files/622656b5e4b09fbb189398aa'},
-    #       'created_at': 'Mon Mar 07 19:02:14 GMT 2022',
-    #       'agent': {'@type': 'cat:extractor', 'name': 'ncsa.openSmileExtractor',
-    #                 'extractor_id': 'http://clowder:9000/extractors/ncsa.openSmileExtractor/1.0'},
-    #       'content': {'audspec_lengthL1norm_sma_range': 0.31050658226013184,
-    #                   'audspec_lengthL1norm_sma_maxPos': 0.34090909361839294,
-    #                   'audspec_lengthL1norm_sma_minPos': 0.9772727489471436}}]
-    # ]
-    #
-    # batch_visualization(metadata_list)
